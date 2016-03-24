@@ -8,8 +8,12 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
+import com.mongodb.gridfs.GridFS;
+import com.mongodb.gridfs.GridFSInputFile;
 import org.bson.Document;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -90,13 +94,23 @@ public class MongoDBJDBC {
      */
     public void insertMany() {
         //連接到 mongodb 服務。
-        MongoClient mongoClient = new MongoClient("localhost", 27017);
+        MongoClient mongoClient = new MongoClient("192.168.99.100", 27017);
 
         // 連接到數據庫。
-        MongoDatabase mongoDatabase = mongoClient.getDatabase("mycol");
+        MongoDatabase mongoDatabase = mongoClient.getDatabase("test");
+
+        GridFS gridFS = new GridFS(mongoClient.getDB("test"));
+        try {
+            GridFSInputFile file = gridFS.createFile(new File("D:\\Downloads\\level05.pdf"));
+            file.setFilename("new_pdf.pdf");
+            file.save();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         System.out.println("Connect to database successfully");
 
-        MongoCollection<Document> collection = mongoDatabase.getCollection("test");
+        MongoCollection<Document> collection = mongoDatabase.getCollection("test_data");
         System.out.println("集合test選擇成功");
 
         // 插入文檔。
@@ -106,7 +120,7 @@ public class MongoDBJDBC {
         Document document = new Document("title", "MongoDB").
                 append("description", "database").
                 append("likes", 100).
-                append("by", "Fly");
+                append("by", "Fly");//.append("file_pdf", new File("D:\\Downloads\\level05.pdf"));
         List<Document> documents = new ArrayList<Document>();
         documents.add(document);
         collection.insertMany(documents);
@@ -196,7 +210,7 @@ public class MongoDBJDBC {
     public static void main(String[] args) {
         try {
             MongoDBJDBC mongoDBJDBC = new MongoDBJDBC();
-            mongoDBJDBC.conn();
+            mongoDBJDBC.insertMany();
         } catch (Exception e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
         }
