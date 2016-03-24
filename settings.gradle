@@ -1,2 +1,4 @@
 rootProject.name = 'java-example'
 include 'java-se', 'java-websocket'
+include 'mongo'
+
