@@ -26,7 +26,7 @@ public class MongoDBJDBC {
      */
     public void conn() {
         //連接到mongodb服務
-        MongoClient mongoClient = new MongoClient("localhost", 27017);
+        MongoClient mongoClient = getMongoClient();
 
         //連接到數據庫
         MongoDatabase mongoDatabase = mongoClient.getDatabase("mycol");
@@ -61,7 +61,7 @@ public class MongoDBJDBC {
      */
     public void vreateCollection() {
         // 連接到 mongodb 服務。
-        MongoClient mongoClient = new MongoClient("localhost", 27017);
+        MongoClient mongoClient = getMongoClient();
 
         // 連接到數據庫。
         MongoDatabase mongoDatabase = mongoClient.getDatabase("mycol");
@@ -78,7 +78,7 @@ public class MongoDBJDBC {
      */
     public MongoCollection<Document> getCollection() {
         // 連接到mongodb服務。
-        MongoClient mongoClient = new MongoClient("localhost", 27017);
+        MongoClient mongoClient = getMongoClient();
 
         //連接到數據庫
         MongoDatabase mongoDatabase = mongoClient.getDatabase("mycol");
@@ -94,7 +94,7 @@ public class MongoDBJDBC {
      */
     public void insertMany() {
         //連接到 mongodb 服務。
-        MongoClient mongoClient = new MongoClient("192.168.99.100", 27017);
+        MongoClient mongoClient = getMongoClient();
 
         // 連接到數據庫。
         MongoDatabase mongoDatabase = mongoClient.getDatabase("test");
@@ -128,13 +128,22 @@ public class MongoDBJDBC {
     }
 
     /**
+     * 連接到 mongodb 服務。
+     *
+     * @return Moongo 連線。
+     */
+    private MongoClient getMongoClient() {
+        return new MongoClient("localhost", 27017);
+    }
+
+    /**
      * 使用 com.mongodb.client.MongoCollection 類別中的 find() 方法來獲取集合中的所有文檔。
      *
      * @return 取得的集合。
      */
     public MongoCursor<Document> find() {
         // 連接到 mongodb 服務。
-        MongoClient mongoClient = new MongoClient("localhost", 27017);
+        MongoClient mongoClient = getMongoClient();
 
         // 連接到數據庫。
         MongoDatabase mongoDatabase = mongoClient.getDatabase("mycol ");
@@ -160,7 +169,7 @@ public class MongoDBJDBC {
      */
     public void updateMany() {
         // 連接到 mongodb 服務。
-        MongoClient mongoClient = new MongoClient("localhost", 27017);
+        MongoClient mongoClient = getMongoClient();
 
         // 連接到數據庫。
         MongoDatabase mongoDatabase = mongoClient.getDatabase("mycol");
@@ -184,8 +193,8 @@ public class MongoDBJDBC {
      * 使用 com.mongodb.DBCollection 類別中的 findOne() 方法來獲取第一個文檔，然後使用 remove 方法刪除。
      */
     public void delete() {
-        // 連接到mongodb服務。
-        MongoClient mongoClient = new MongoClient("localhost", 27017);
+        // 連接到 mongodb 服務。
+        MongoClient mongoClient = getMongoClient();
 
         // 連接到數據庫。
         MongoDatabase mongoDatabase = mongoClient.getDatabase("mycol");

@@ -10,10 +10,13 @@ allprojects {
 subprojects {
     apply plugin: 'java'
 
-    // java
+    // Properties added by the java plugin
     sourceCompatibility = 1.8
+    targetCompatibility = 1.8
 
     dependencies {
         testCompile 'junit:junit:4.11'
+        compile 'org.slf4j:slf4j-api:1.7.19'
+        compile 'org.slf4j:slf4j-simple:1.7.19'
     }
 }
