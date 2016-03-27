@@ -3,22 +3,28 @@ package com.skyeyeh.mongo.dao;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoCredential;
 import com.mongodb.ServerAddress;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by TV6015 on 2016/3/25.
+ * 實作使用帳號密碼連接到 mongodb 服務。
  */
-public class ＣlientFactoryByUserImpl implements ClientFactory {
-    public static final String HOST = "192.168.99.100";
-    public static final int PORT = 27017;
+public class DaoByUserImpl extends Dao {
+    final Logger logger = LoggerFactory.getLogger(DaoByUserImpl.class);
+
     public static final String USER_NAME = "admin";
     public static final String SOURCE = "source";
     public static final String PASSWORD = "pass";
 
+    public DaoByUserImpl() {
+        super();
+    }
+
     /**
-     * 連接到 mongodb 服務。
+     * 使用帳號密碼連接到 mongodb 服務。
      *
      * @return Moongo 服務連線
      */
