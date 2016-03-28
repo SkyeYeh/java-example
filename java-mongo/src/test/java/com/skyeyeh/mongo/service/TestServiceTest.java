@@ -15,7 +15,7 @@ public class TestServiceTest {
     }
 
     @Test
-    public void testWriteFile() throws Exception {
-        testService.writeFile();
+    public void testInsert() throws Exception {
+        testService.insert();
     }
 }

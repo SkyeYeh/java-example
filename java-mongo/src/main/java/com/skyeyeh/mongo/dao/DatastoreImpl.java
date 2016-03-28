@@ -1,5 +1,6 @@
 package com.skyeyeh.mongo.dao;
 
+import com.mongodb.DB;
 import com.mongodb.MongoClient;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
@@ -13,26 +14,22 @@ import org.slf4j.LoggerFactory;
 import java.util.List;
 
 /**
- * 連接到 mongodb 服務抽象。
+ * Created by TV6015 on 2016/3/28.
  */
-public abstract class Dao {
-    final Logger logger = LoggerFactory.getLogger(Dao.class);
+public class DatastoreImpl {
+    final Logger logger = LoggerFactory.getLogger(DatastoreImpl.class);
 
-    String HOST = "192.168.99.100";
-    int PORT = 27017;
-    String databaseName = "my_database";
-    String collectionName = "my_collection";
+    private final MongoClient mongoClient;
+    private final DB db;
+    private final String databaseName;
+    private final String collectionName;
 
-    public Dao() {
-        getMongoClient();
+    public DatastoreImpl(MongoClient mongoClient, String dbName, String collectionName) {
+        this.mongoClient = mongoClient;
+        this.db = mongoClient.getDB(dbName);
+        this.databaseName = dbName;
+        this.collectionName = collectionName;
     }
-
-    /**
-     * 連接到 mongodb 服務。
-     *
-     * @return Moongo 服務連線
-     */
-    abstract MongoClient getMongoClient();
 
     /**
      * 連接資料庫，你需要指定資料庫名稱，如果指定的資料庫不存在，mongo 會自動創建資料庫。
@@ -40,9 +37,6 @@ public abstract class Dao {
      * @return 資料庫
      */
     public MongoDatabase getDayabase() {
-        // 連接到 mongodb 服務。
-        MongoClient mongoClient = getMongoClient();
-
         // 連接到資料庫。
         MongoDatabase mongoDatabase = mongoClient.getDatabase(databaseName);
 
@@ -51,7 +45,7 @@ public abstract class Dao {
     }
 
     /**
-     * 使用 com.mongodb.client.MongoDatabase 類別中的 createCollection() 來創建集合。
+     * 使用 MongoDatabase 類別中的 createCollection() 來創建集合。
      */
     public void createCollection() {
         // 連接到資料庫。
@@ -62,7 +56,7 @@ public abstract class Dao {
     }
 
     /**
-     * 使用 com.mongodb.client.MongoDatabase 類別的 getCollection() 方法來獲取一個集合。
+     * 使用 MongoDatabase 類別的 getCollection() 方法來獲取一個集合。
      *
      * @return 取得的集合
      */
@@ -111,7 +105,7 @@ public abstract class Dao {
     }
 
     /**
-     * 使用 com.mongodb.DBCollection 類別中的 findOne() 方法來獲取第一個文檔，然後使用 remove 方法刪除。
+     * 使用 DBCollection 類別中的 findOne() 方法來獲取第一個文檔，然後使用 remove 方法刪除。
      */
     public void delete() {
         // 連接到資料庫。
@@ -126,12 +120,12 @@ public abstract class Dao {
         FindIterable<Document> findIterable = collection.find();
         MongoCursor<Document> mongoCursor = findIterable.iterator();
         while (mongoCursor.hasNext()) {
-            System.out.println(mongoCursor.next());
+            logger.info(mongoCursor.next().toString());
         }
     }
 
     /**
-     * 使用 com.mongodb.client.MongoCollection 類別中的 find() 方法來獲取集合中的所有文檔。
+     * 使用 MongoCollection 類別中的 find() 方法來獲取集合中的所有文檔。
      *
      * @return 取得的集合
      */
@@ -146,13 +140,13 @@ public abstract class Dao {
         FindIterable<Document> findIterable = collection.find();
         MongoCursor<Document> mongoCursor = findIterable.iterator();
         while (mongoCursor.hasNext()) {
-            System.out.println(mongoCursor.next());
+            logger.info(mongoCursor.next().toString());
         }
         return mongoCursor;
     }
 
     /**
-     * com.mongodb.client.MongoCollection 類別中的 updateMany() 方法來更新集合中的文檔。
+     * MongoCollection 類別中的 updateMany() 方法來更新集合中的文檔。
      */
     public void updateMany() {
         // 連接到資料庫。
@@ -165,7 +159,7 @@ public abstract class Dao {
         FindIterable<Document> findIterable = collection.find();
         MongoCursor<Document> mongoCursor = findIterable.iterator();
         while (mongoCursor.hasNext()) {
-            System.out.println(mongoCursor.next());
+            logger.info(mongoCursor.next().toString());
         }
     }
 }

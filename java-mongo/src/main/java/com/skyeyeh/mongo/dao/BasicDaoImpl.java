@@ -7,11 +7,11 @@ import org.slf4j.LoggerFactory;
 /**
  * 實作連接到 mongodb 服務。
  */
-public class DaoImpl extends Dao {
-    final Logger logger = LoggerFactory.getLogger(DaoImpl.class);
+public class BasicDaoImpl extends BasicDao {
+    final Logger logger = LoggerFactory.getLogger(BasicDaoImpl.class);
 
-    public DaoImpl() {
-        super();
+    public BasicDaoImpl(MongoClient mongoClient, String databaseName, String collectionName) {
+        super(mongoClient, databaseName, collectionName);
     }
 
     /**

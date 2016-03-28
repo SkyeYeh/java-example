@@ -12,15 +12,15 @@ import java.util.List;
 /**
  * 實作使用帳號密碼連接到 mongodb 服務。
  */
-public class DaoByUserImpl extends Dao {
-    final Logger logger = LoggerFactory.getLogger(DaoByUserImpl.class);
+public class BasicDaoByUserImpl extends BasicDao {
+    final Logger logger = LoggerFactory.getLogger(BasicDaoByUserImpl.class);
 
     public static final String USER_NAME = "admin";
     public static final String SOURCE = "source";
     public static final String PASSWORD = "pass";
 
-    public DaoByUserImpl() {
-        super();
+    public BasicDaoByUserImpl(MongoClient mongoClient, String databaseName, String collectionName) {
+        super(mongoClient, databaseName, collectionName);
     }
 
     /**
