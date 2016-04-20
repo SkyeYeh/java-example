@@ -162,4 +162,8 @@ public class DatastoreImpl {
             logger.info(mongoCursor.next().toString());
         }
     }
+
+    public DB getDb() {
+        return db;
+    }
 }
