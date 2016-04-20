@@ -93,4 +93,12 @@ public class Solution_1 {
         }
         throw new IllegalArgumentException("No two sum solution");
     }
+
+    public static void main(String[] args) {
+        int[] numbers = new Solution_1().twoSum(new int[]{2, 7, 11, 15}, 9);
+
+        for (int number : numbers) {
+            System.out.println(number);
+        }
+    }
 }
