@@ -10,25 +10,28 @@ public class Solution_7 {
      * @param x An integer
      * @return Reverse digits
      */
-    public int reverse(long x) {
-        String temp = "";
+    public int reverse(int x) {
+        long origin = x;
+        long result = 0;
+        int lowerInt;
+        while ((origin) != 0) {
+            lowerInt = (int) (origin % 10);
+            origin /= 10;
 
-        // Reverse digits.
-        String s = String.valueOf(x);
-        for (int i = s.length() - 1; i >= 0; i--) {
-            temp += s.charAt(i);
+            result = 10 * result + lowerInt;
+
+            // Check overflow.
+            if (result > Integer.MAX_VALUE || result < Integer.MIN_VALUE) {
+                return 0;
+            }
         }
 
-        // Replace negative.
-        if (temp.lastIndexOf('-') > -1) {
-            temp = "-" + temp.replace("-", "");
-        }
-
-        // To int.
-        return Integer.parseInt(temp);
+        return (int) result;
     }
 
     public static void main(String[] args) {
-        System.out.println(new Solution_7().reverse(123));
+        Solution_7 solution_7 = new Solution_7();
+        System.out.println(solution_7.reverse(123));
+        System.out.println(solution_7.reverse(-123));
     }
 }
