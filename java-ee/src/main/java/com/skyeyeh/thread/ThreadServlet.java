@@ -14,6 +14,8 @@ import java.io.PrintWriter;
  */
 @WebServlet("/thread")
 public class ThreadServlet extends HttpServlet {
+    static Thread thread;
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         doPost(req, resp);
@@ -22,7 +24,29 @@ public class ThreadServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Thread thread = new Thread(() -> {
+        if (thread == null || thread.getState() == Thread.State.TERMINATED) {
+            initThread();
+        }
+
+        System.out.println(thread.getState());
+        PrintWriter out = resp.getWriter();
+        if (thread.getState() == Thread.State.NEW) {
+            // Thread start.
+            out.print("Thread start.");
+            thread.start();
+        } else {
+            // Thread started.
+            out.print("Thread has been starting.");
+        }
+        out.close();
+        return;
+    }
+
+    /**
+     * Initial thread.
+     */
+    private void initThread() {
+        thread = new Thread(() -> {
             System.out.println("Thread start!");
             try {
                 Thread.sleep(10000);
@@ -31,11 +55,5 @@ public class ThreadServlet extends HttpServlet {
             }
             System.out.println("Thread end!");
         });
-        thread.start();
-
-        PrintWriter out = resp.getWriter();
-        out.print("End");
-        out.close();
-        return;
     }
 }
