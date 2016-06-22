@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 /**
- * Test.
+ * Asynchronous by thread.
  */
 @WebServlet("/thread")
 public class ThreadServlet extends HttpServlet {
